@@ -1,9 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import React from "react";
+import { mount } from "enzyme";
+import { App } from "./App";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
+import Inputs from "../components/inputBoxes";
+import SumBox from '../components/sumBox';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+let wrapper; 
+
+beforeAll(() => {
+  wrapper = mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+})
+
+test('should contain inputs and sumbox', () => {
+  expect(wrapper.find(Inputs)).toExist();
+  expect(wrapper.find(SumBox)).toExist();
 });
